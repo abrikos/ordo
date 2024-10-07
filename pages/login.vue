@@ -1,18 +1,19 @@
 <script setup lang="ts">
 import {useCustomStore} from '~/store/custom-store';
 
-const {authenticateUser} = useCustomStore()
+const {loggedUser, authenticateUser} = useCustomStore()
 const config = useRuntimeConfig()
 
 const user = ref(config.public.devMode ? {email: 'admin@a12.com', password: '12345678'} : {email: '', password: ''})
 
-const res = ref(true)
 async function submit() {
-  res.value = !!await authenticateUser(user.value)
+  await authenticateUser(user.value)
 }
+onMounted(()=>{
+  if(loggedUser) {navigateTo('/user')}
+})
 
 function reset() {
-  res.value = true
   user.value = {email: '', password: ''}
 }
 

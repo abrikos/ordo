@@ -59,9 +59,9 @@ router.delete('/:_id', defineEventHandler(async (event) => {
 
 router.get('/logout', defineEventHandler(async (event) => {
     const cookies = parseCookies(event)
-    const {authTokenName} = useRuntimeConfig(event)
-    await Token.deleteOne({access: cookies[authTokenName]});
-    deleteCookie(event, authTokenName)
+    const config = useRuntimeConfig(event)
+    await Token.deleteOne({access: cookies[config.public.authTokenName]});
+    deleteCookie(event, config.public.authTokenName)
 }))
 
 

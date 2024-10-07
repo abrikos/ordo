@@ -21,7 +21,6 @@ export const useCustomStore = defineStore('auth', {
         async getUser(): Promise<UserPayloadInterface | null> {
             if (!this.loggedUser) {
                 const data = await useNuxtApp().$GET('/user/checkAuth')
-                console.log('ghhhhhhhh', data)
                 this.loggedUser = data as UserPayloadInterface
             }
             return this.loggedUser
