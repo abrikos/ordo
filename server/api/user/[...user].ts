@@ -9,7 +9,7 @@ router.post('/request-restore-password', defineEventHandler(async (event) => {
     const {email} = await readBody(event)
     const user = await User.findOne({email});
     if (!user) {
-        await utils.sleep(4000)
+        //await utils.sleep(4000)
         return 1
     }
     user.restorePassword = crypto.createHmac('sha256', '').update(Math.random().toString()).digest('hex')
@@ -43,10 +43,10 @@ router.get('/checkAuth', defineEventHandler(async (event) => {
     return event.context.user
 }))
 
-router.get('/admin-all', defineEventHandler(async (event) => {
+router.get('/list-all', defineEventHandler(async (event) => {
     const user = event.context.user
     if (!user || !user.isAdmin) throw createError({statusCode: 403, message: 'Доступ запрещён',})
-    return User.find()
+    return User.find({}, '-passwordHash')
 }))
 
 router.delete('/:_id', defineEventHandler(async (event) => {
@@ -78,7 +78,8 @@ router.put('/signup', defineEventHandler(async (event) => {
     }
 
 }))
-
+//User.deleteMany().then(console.log)
+//User.find().then(console.log)
 router.post('/login', defineEventHandler(async (event) => {
     const {email, password} = await readBody(event)
     const user = await User.findOne({email});
@@ -98,7 +99,7 @@ router.get('/:_id/toggle-admin', defineEventHandler(async (event) => {
 }))
 
 router.post('/update', defineEventHandler(async (event) => {
-    const {name, email, avatarImage, ethAddress} = await readBody(event)
+    const {name, email, avatarImage} = await readBody(event)
     const user = event.context.user
     if (!user) throw createError({statusCode: 403, message: 'Доступ запрещён'})
     const found = await User.findById(user.id)
@@ -106,7 +107,6 @@ router.post('/update', defineEventHandler(async (event) => {
     if (!validateEmail(email)) throw createError({statusCode: 403, message: 'Wrong email'})
     found.email = email
     found.name = name
-    found.ethAddress = ethAddress
     found.avatarImage = avatarImage
     try {
         await found.save()
@@ -120,12 +120,14 @@ router.post('/update', defineEventHandler(async (event) => {
 //User.updateOne({email:'abrikoz@gmail.com'},{passwordHash:'d09ae2219e185ef2cbc84e1425e6cc08959a831e0646a0d85bd1542505571098'}).then(console.log)
 
 router.post('/password', defineEventHandler(async (event) => {
-    const {password} = await readBody(event)
+    const {password, password2} = await readBody(event)
     const user = event.context.user
     if (!user) throw createError({statusCode: 403, message: 'Доступ запрещён',})
-    if (password) {
+    if (password && password === password2) {
         user.password = password
         await user.save()
+    }else{
+        throw createError({statusCode: 400, message: 'Ошибка смены пароля',})
     }
 }))
 
