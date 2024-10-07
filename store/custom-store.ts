@@ -30,14 +30,14 @@ export const useCustomStore = defineStore('auth', {
             const data: any = await useNuxtApp().$POST(`/user/login`, body)
             if (!data) return
             this.loggedUser = data
-            navigateTo('/user')
+            navigateTo('/')
         },
         async signupUser(body: UserPayloadInterface) {
             const config = useRuntimeConfig()
             const data: any = await useNuxtApp().$PUT(`/user/signup`, body)
             if (!data) return
             this.loggedUser = await this.getUser()
-            navigateTo('/user')
+            navigateTo('/')
         },
         async logUserOut() {
             await useNuxtApp().$GET(`/user/logout`)

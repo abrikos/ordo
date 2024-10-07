@@ -49,7 +49,7 @@ export default defineNuxtConfig({
     duration: 5000
   },
   quasar: {
-    // Configurable Component Defaults
+    sassVariables: '~/public/quazar.variables.sass',
     components: {
       defaults: {
         QBtn: {

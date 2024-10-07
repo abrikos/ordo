@@ -16,7 +16,8 @@ function toggleDrawer() {
 q-layout(view="hHh Lpr lff")
   q-header(elevated)
     q-toolbar
-      q-btn(v-if="loggedUser" flat round dense icon="menu" @click="toggleDrawer")
+      q-img(src="/favicon.ico" style="height: 20px;max-width: 20px")
+      //q-btn(v-if="loggedUser" flat round dense icon="menu" @click="toggleDrawer")
       q-toolbar-title
         q-btn(flat to="/") Веб-конфигуратор
       q-btn(to="/admin/users" label="Users" )
