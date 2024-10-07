@@ -40,7 +40,6 @@ router.post('/process-restore-password', defineEventHandler(async (event) => {
 }))
 
 router.get('/checkAuth', defineEventHandler(async (event) => {
-    console.log('gggggggg', event.context.user)
     return event.context.user
 }))
 
@@ -74,7 +73,7 @@ router.put('/signup', defineEventHandler(async (event) => {
         if (!found) return
         await utils.setAuthToken(event, found)
         return utils.adaptUser(found)
-    }catch(err) {
+    } catch (err) {
         throw createError({statusCode: 400, message: 'Ошибка регистрации'})
     }
 
@@ -84,11 +83,9 @@ router.post('/login', defineEventHandler(async (event) => {
     const {email, password} = await readBody(event)
     const user = await User.findOne({email});
     if (user?.checkPasswd(password)) {
-        return user
-    }
-    if (!user) throw createError({statusCode: 401, message: 'Ошибка аутентификации'})
-    await utils.setAuthToken(event, user)
-    return utils.adaptUser(user)
+        await utils.setAuthToken(event, user)
+        return utils.adaptUser(user)
+    } else throw createError({statusCode: 401, message: 'Ошибка аутентификации'})
 }))
 router.get('/:_id/toggle-admin', defineEventHandler(async (event) => {
     const user = event.context.user

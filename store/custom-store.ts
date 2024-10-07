@@ -21,8 +21,7 @@ export const useCustomStore = defineStore('auth', {
         async getUser(): Promise<UserPayloadInterface | null> {
             if (!this.loggedUser) {
                 const data = await useNuxtApp().$GET('/user/checkAuth')
-                if (!data) {
-                }
+                console.log('ghhhhhhhh', data)
                 this.loggedUser = data as UserPayloadInterface
             }
             return this.loggedUser
@@ -31,7 +30,7 @@ export const useCustomStore = defineStore('auth', {
             const config = useRuntimeConfig()
             const data: any = await useNuxtApp().$POST(`/user/login`, body)
             if (!data) return
-            this.loggedUser = await this.getUser()
+            this.loggedUser = data
             navigateTo('/user')
         },
         async signupUser(body: UserPayloadInterface) {
@@ -39,15 +38,12 @@ export const useCustomStore = defineStore('auth', {
             const data: any = await useNuxtApp().$PUT(`/user/signup`, body)
             if (!data) return
             this.loggedUser = await this.getUser()
-            console.log('ffffff', this.loggedUser)
             navigateTo('/user')
         },
         async logUserOut() {
-            const config = useRuntimeConfig()
-            console.warn('Log out')
-            //localStorage.setItem(config.public.authTokenName, '')
-            //localStorage.setItem(config.public.authTokenName + 'expire', '')
+            await useNuxtApp().$GET(`/user/logout`)
             this.loggedUser = null
+            navigateTo('/login')
         },
     },
 });

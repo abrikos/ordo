@@ -10,11 +10,8 @@ export interface IUser extends mongoose.Document {
     password: string;
     restorePassword: string
     email: string;
-    strategy: string;
-    strategyId: string;
     checkPasswd: (passwd: string) => boolean
     isAdmin: boolean
-    ethAddress: string
     _doc: any
 }
 
@@ -34,15 +31,13 @@ const schema = new Schema({
     isAdmin: {type: Boolean, default: false},
     nameStored: String,
     avatarImage: String,
-    strategy: String,
-    strategyId: String,
     passwordHash: String,
     email: {
         type: String,
         trim: true,
         lowercase: true,
         unique: true,
-        validate: [validateEmail, 'Please fill a valid email address'],
+        validate: [validateEmail, 'Не верный e-mail'],
         required: true,
     },
     restorePassword: String,

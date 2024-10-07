@@ -1,10 +1,10 @@
 import {Token} from "~/server/models/token.model";
 //User.find().then(console.log)
 export default defineEventHandler(async (event) => {
-    const {authExpiration, authTokenName, authRefreshBeforeExpiration} = useRuntimeConfig()
+    const config = useRuntimeConfig()
     const cookies = parseCookies(event)
     await Token.deleteExpiredTokens()
-    const token  = await Token.findOne({access: cookies[authTokenName]}).populate('user');
+    const token  = await Token.findOne({access: cookies[config.public.authTokenName]}).populate('user');
     if (token?.user) {
         const {user} = token
         if(token.expired){
