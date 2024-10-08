@@ -7,8 +7,8 @@ interface UserPayloadInterface {
 }
 
 export const useCustomStore = defineStore('auth', {
-    state: (): { loading: boolean, loggedUser: UserPayloadInterface | null } => ({
-        loggedUser: null,
+    state: (): { loading: boolean, loggedUser: UserPayloadInterface | undefined } => ({
+        loggedUser: undefined,
         loading: false,
     }),
     actions: {
@@ -18,7 +18,7 @@ export const useCustomStore = defineStore('auth', {
         unsetLoading() {
             this.loading = false
         },
-        async getUser(): Promise<UserPayloadInterface | null> {
+        async getUser(): Promise<UserPayloadInterface | undefined> {
             if (!this.loggedUser) {
                 const data = await useNuxtApp().$GET('/user/checkAuth')
                 this.loggedUser = data as UserPayloadInterface
@@ -41,7 +41,7 @@ export const useCustomStore = defineStore('auth', {
         },
         async logUserOut() {
             await useNuxtApp().$GET(`/user/logout`)
-            this.loggedUser = null
+            this.loggedUser = undefined
             navigateTo('/login')
         },
     },

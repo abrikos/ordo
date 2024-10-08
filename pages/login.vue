@@ -4,7 +4,7 @@ import {useCustomStore} from '~/store/custom-store';
 const {loggedUser, authenticateUser} = useCustomStore()
 const config = useRuntimeConfig()
 
-const user = ref(config.public.devMode ? {email: 'admin@a12.com', password: '12345678'} : {email: '', password: ''})
+const user = ref({email: '', password: ''})
 
 async function submit() {
   await authenticateUser(user.value)
@@ -21,7 +21,7 @@ function reset() {
 </script>
 
 <template lang="pug">
-q-card.q-pa-lg.fixed-center
+q-card.q-pa-sm.fixed-center
   q-toolbar
     q-toolbar-title Вход
   q-form(@submit="submit" @reset="reset")
@@ -31,7 +31,8 @@ q-card.q-pa-lg.fixed-center
       q-btn(type="submit" label="Отправить" color="primary" )
       q-btn(type="reset" label="Сбросить")
       q-btn(to="/signup" label="Зарегистрироваться")
-
+  div.flex.justify-center
+    router-link(to="/password-restore") Восстановить пароль
 </template>
 
 <style scoped>

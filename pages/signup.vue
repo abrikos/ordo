@@ -3,16 +3,14 @@ import {useCustomStore} from '~/store/custom-store';
 
 const {signupUser} = useCustomStore()
 const config = useRuntimeConfig()
-const user = ref(config.public.devMode ? {email: Math.random()+'@a12.com', password: '12345678', password2:'12345678'} : {email: '', password: '', password2: ''})
+const user = ref({email: '', password: '', password2: ''})
 
 const res = ref(true)
 async function submit() {
-  user.value.email = Math.random()+'@a12.com'
-  res.value = !!await signupUser(user.value)
+  await signupUser(user.value)
 }
 
 function reset() {
-  res.value = true
   user.value = {email: '', password: '', password2:''}
 }
 
@@ -20,7 +18,7 @@ function reset() {
 </script>
 
 <template lang="pug">
-q-card.q-pa-lg.fixed-center
+q-card.q-pa-sm.fixed-center
   q-toolbar
     q-toolbar-title Регистрация
   q-form(@submit="submit" @reset="reset")
