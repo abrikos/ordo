@@ -3,6 +3,14 @@ import type {NuxtPage} from "@nuxt/schema";
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   ssr: false,
+  app: {
+    head: {
+      link: [{rel: 'icon', type: 'image/svg', href: '/logo.svg'}],
+      script: [
+        //{src:'/ym.js', tagPosition:'bodyClose'}
+      ]
+    }
+  },
   hooks: {
     'pages:extend'(pages) {
       function setMiddleware(pages: NuxtPage[]) {
@@ -19,12 +27,14 @@ export default defineNuxtConfig({
       setMiddleware(pages)
     }
   },
-  modules:[
-    '@pinia/nuxt',
-    'nuxt-quasar-ui',
-    'nuxt-mongoose',
-    'nuxt-snackbar'
-  ],
+  modules:['@pinia/nuxt', 'nuxt-quasar-ui', 'nuxt-mongoose', 'nuxt-snackbar'],
+  i18n: {
+    locales: [
+      { code: 'en', iso: 'en-US' },
+      { code: 'fr', iso: 'fr-FR' }
+    ],
+    defaultLocale: 'en',
+  },
   mongoose: {
     uri: process.env.MONGODB_URI,
     options: {},
@@ -55,8 +65,10 @@ export default defineNuxtConfig({
         QBtn: {
           dense: true,
           flat: true,
+          noCaps: true
         },
         QInput: {
+          outlined: true,
           dense: true
         }
       }

@@ -10,6 +10,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@nuxtjs/i18n": "latest",
     "@pinia/nuxt": "^0.5.4",
     "@quasar/extras": "^1.16.12",
     "@types/nodemailer": "^6.4.16",
@@ -21,11 +22,11 @@
     "nuxt-snackbar": "^1.1.2",
     "pug": "^3.0.3",
     "quasar": "^2.17.0",
+    "read-excel-file": "^5.8.6",
+    "sass": "^1.79.4",
     "vue": "latest",
-    "vue-router": "latest"
+    "vue-router": "latest",
+    "xlsx": "^0.18.5"
   },
-  "packageManager": "yarn@1.22.21+sha1.1959a18351b811cdeedbd484a8f86c3cc3bbaf72",
-  "devDependencies": {
-    "sass-embedded": "^1.79.4"
-  }
+  "packageManager": "yarn@1.22.21+sha1.1959a18351b811cdeedbd484a8f86c3cc3bbaf72"
 }
