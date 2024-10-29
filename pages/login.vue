@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {useCustomStore} from '~/store/custom-store';
 
+definePageMeta({layout: 'layout-login'});
 const {loggedUser, authenticateUser} = useCustomStore()
 const config = useRuntimeConfig()
 

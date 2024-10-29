@@ -26,14 +26,14 @@ const pages = [
 </script>
 
 <template lang="pug">
-q-layout(view="hHh Lpr lff")
+q-layout(view="hHh Lpr lff" v-if="loggedUser?.isAdmin2" )
   NuxtLoadingIndicator
   q-header(elevated)
     q-toolbar
       q-img(src="/logo.svg" style="height: 30px;max-width: 30px")
       //q-btn(v-if="loggedUser" flat round dense icon="menu" @click="toggleDrawer")
       q-toolbar-title
-        q-btn(flat to="/") Abrikos HP
+        q-btn(flat to="/") Ordo
       q-btn-dropdown(flat label="Admin" v-if="loggedUser?.isAdmin")
         q-list
           q-item
@@ -43,16 +43,9 @@ q-layout(view="hHh Lpr lff")
       q-btn.flex.la-align-center(flat dense no-caps v-if="loggedUser" to="/user") {{loggedUser.email}}
       q-btn(v-if="loggedUser" @click="logUserOut" icon="logout" )
       q-btn(v-if="!loggedUser" to="/login" icon="login" )
-  q-drawer(v-model="leftDrawerOpen" bordered :mini="mini")
-
-    q-list
-      q-item(v-for="page in pages" :to="page.to" active-class="active" :active="route.fullPath===page.to || route.path===page.to")
-        q-item-section(avatar)
-          q-icon(:name="page.icon")
-        q-item-section {{page.label}}
-    div#progress
-      q-linear-progress(color="blue" indeterminate v-if="loading" )
-      //ThemeSwitch
+  q-page-container
+    slot
+q-layout(v-else)
   q-page-container
     slot
 

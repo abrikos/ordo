@@ -3,11 +3,9 @@
 </script>
 
 <template lang="pug">
-q-page
-  q-parallax(src="/ordo.JPG")
-
+slot
 </template>
 
-<style scoped lang="sass">
+<style scoped>
 
 </style>
