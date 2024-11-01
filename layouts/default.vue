@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {storeToRefs} from 'pinia'; // import storeToRefs helper hook from pinia
 import {useCustomStore} from '~/store/custom-store';
+import {useI18n} from "vue-i18n";
 
 const config = useRuntimeConfig()
 const route = useRoute()
@@ -45,12 +46,20 @@ q-layout(view="hHh Lpr lff" v-if="loggedUser?.isAdmin2" )
       q-btn(v-if="!loggedUser" to="/login" icon="login" )
   q-page-container
     slot
-q-layout(v-else)
+q-layout(v-else )
   q-page-container
-    slot
+    div.container.flex.justify-center
+      slot
 
 </template>
 
-<style scoped>
+<style lang="sass">
+body
+  background-color: black
+  background-image: url("/image/ordo.JPG")
+  background-size: cover
+.container
+  margin: auto
+  width: 1200px
 
 </style>

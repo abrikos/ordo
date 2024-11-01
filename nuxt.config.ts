@@ -29,13 +29,6 @@ export default defineNuxtConfig({
         }
     },
     modules: ['@pinia/nuxt', 'nuxt-quasar-ui', 'nuxt-mongoose', 'nuxt-snackbar'],
-    i18n: {
-        locales: [
-            {code: 'en', iso: 'en-US'},
-            {code: 'fr', iso: 'fr-FR'}
-        ],
-        defaultLocale: 'en',
-    },
     mongoose: {
         uri: process.env.MONGODB_URI,
         options: {},
@@ -53,15 +46,6 @@ export default defineNuxtConfig({
         }
 
     },
-    vite: {
-        css: {
-            preprocessorOptions: {
-                sass: {
-                    api: 'modern',
-                },
-            },
-        },
-    },
 
     snackbar: {
         bottom: true,
@@ -69,7 +53,7 @@ export default defineNuxtConfig({
         duration: 5000
     },
     quasar: {
-        sassVariables: '~/public/quazar.variables.sass',
+        //sassVariables: '~/public/quazar.variables.sass',
         components: {
             defaults: {
                 QBtn: {
