@@ -6,7 +6,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     const {getUser} = useCustomStore();
     const loggedUser =await getUser()
     if(!loggedUser && !pages.includes(to.name as string)) {
-        return navigateTo('/login')
+        //return navigateTo('/login')
     }
 
 });
